@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grocerystore/components/GroceryItemTile.dart';
 import 'package:grocerystore/models/CartModel.dart';
+import 'package:grocerystore/pages/CartPage.dart';
 import 'package:provider/provider.dart';
 
 class Homepage extends StatelessWidget {
@@ -12,6 +15,17 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => CartPage()));
+        },
+        backgroundColor: Colors.black,
+        child: Icon(
+          Icons.shopping_bag,
+          color: Colors.white,
+        ),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +91,9 @@ class Homepage extends StatelessWidget {
                         itemPrice: value.shopItems[index][1],
                         imagePath: value.shopItems[index][2],
                         color: value.shopItems[index][3],
+                        onPressed: () {
+                          Provider.of<CartModel>(context, listen: false).addItemToCart(index);
+                        },
                       );
                     });
               },
